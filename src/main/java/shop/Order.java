@@ -2,7 +2,6 @@ package shop;
 
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
-import java.util.List;
 
 @Entity
 @Table(name="Order_table")
@@ -13,6 +12,15 @@ public class Order {
     private Long id;
     private String productId;
     private Integer qty;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     @PostPersist
     public void onPostPersist(){
@@ -20,6 +28,12 @@ public class Order {
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
 
+
+    }
+
+    @PostUpdate
+    public void onPostUpdate(){
+        System.out.println("Update Event raised..................!!!!");
 
     }
 
